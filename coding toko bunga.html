@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom Harmony - Toko Bunga</title>
+
+    <!-- ================= CSS STYLE ================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* ================= LANDING PAGE (TENGAH) ================= */
+        #landing-page {
+            background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1920&q=80') 
+            no-repeat center/cover;
+            width: 100%;
+            height: 100vh;
+
+            display: grid;
+            place-items: center; /* center vertical & horizontal */
+            text-align: center;
+
+            color: white;
+            text-shadow: 1px 1px 4px black;
+        }
+
+        .landing-title {
+            font-size: 55px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        #landing-page p {
+            font-size: 24px;
+            margin: 5px 0 25px 0;
+        }
+
+        .landing-btn {
+            padding: 14px 30px;
+            background: #ff4d94;
+            color: white;
+            border: none;
+            font-size: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .landing-btn:hover {
+            background: #e60073;
+            transform: scale(1.08);
+        }
+
+        /* ================= HALAMAN TOKO ================= */
+        #shop-page {
+            display: none;
+            animation: fadeIn 0.7s ease;
+            background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
+            backdrop-filter: blur(4px);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        header {
+            background: rgba(255, 115, 180, 0.85);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .team-section, .flower-section {
+            background: rgba(255, 255, 255, 0.85);
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .team-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background: #ffe7f3;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: scale(1.05);
+        }
+
+        /* Flower Card */
+        .flower-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .flower-card {
+            width: 250px;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+            text-align: center;
+            transition: transform .3s;
+        }
+
+        .flower-card:hover {
+            transform: scale(1.05);
+        }
+
+        .flower-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .btn-detail {
+            background: #ff4d94;
+            padding: 10px;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-detail:hover {
+            background: #e60073;
+        }
+
+        /* Modal */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+        }
+
+        #modal-content img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        #close-btn {
+            margin-top: 15px;
+            padding: 8px 15px;
+            border: none;
+            background: #444;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= LANDING PAGE ================= -->
+    <section id="landing-page">
+        <div>
+            <h1 class="landing-title">🌸 BLOOM HARMONY 🌸</h1>
+            <p>TEMPAT TERBAIK UNTUK MENEMUKAN BUNGA YANG INDAH</p>
+            <button class="landing-btn" onclick="enterShop()">EXPLORE</button>
+        </div>
+    </section>
+
+    <!-- ================= HALAMAN TOKO ================= -->
+    <div id="shop-page">
+
+        <header>🌸 FLOWER SHOP 🌸</header>
+
+        <!-- TEAM SECTION -->
+        <section class="team-section">
+            <h2>FLORIST</h2>
+            <div class="team-list">
+                <div class="team-member" onclick="showBio('Matthew D.', 'Florist berpengalaman, spesialis bunga tropis, hobby fotografi bunga.', 'matt.jpg')">Matthew D.</div>
+                <div class="team-member" onclick="showBio('Cecilia N.', 'Florist kreatif, ahli merangkai bunga mawar, suka seni lukis.', 'cecil.jpg')">Cecilia N.</div>
+                <div class="team-member" onclick="showBio('Evelya C.', 'Florist muda berbakat, spesialis bunga tulip dan dekorasi event.', 'elya.jpg')">Evelya C.</div>
+                <div class="team-member" onclick="showBio('Christian S.', 'Florist handal, fokus pada bunga eksotis dan konsultasi taman.', 'tian.jpg')">Christian S.</div>
+            </div>
+        </section>
+
+        <!-- FLOWER LIST -->
+        <section class="flower-section">
+            <h2>LIST FLOWER</h2>
+            <div class="flower-list">
+                <!-- Teratai -->
+                <div class="flower-card">
+                    <img src="teratai.jpg" alt="teratai">
+                    <h3>Bunga Teratai🌸</h3>
+                    <p>Melambangkan kesucian, ketenangan, dan keanggunan.</p>
+                    <button class="btn-detail" onclick="showDetail('Teratai', 'Bunga teratai mampu hidup di atas air. Simbol kedamaian dan ketenangan di banyak budaya.')">Detail</button>
+                </div>
+
+                <!-- Mawar -->
+                <div class="flower-card">
+                    <img src="mawar.jpg" alt="mawar">
+                    <h3>Bunga Mawar🌹</h3>
+                    <p>Bunga cinta, romantis, dan penuh makna.</p>
+                    <button class="btn-detail" onclick="showDetail('Mawar', 'Mawar memiliki duri, namun cantik dan harum. Simbol cinta dan perlindungan.')">Detail</button>
+                </div>
+
+                <!-- Matahari -->
+                <div class="flower-card">
+                    <img src="matahari.jpg" alt="matahari">
+                    <h3>Bunga Matahari🌻</h3>
+                    <p>Melambangkan energi positif dan kebahagiaan.</p>
+                    <button class="btn-detail" onclick="showDetail('Matahari', 'Bunga matahari selalu mengikuti cahaya. Simbol harapan dan kebahagiaan.')">Detail</button>
+                </div>
+
+                <!-- Tulip -->
+                <div class="flower-card">
+                    <img src="tulip.jpg" alt="tulip">
+                    <h3>Bunga Tulip🌷</h3>
+                    <p>Elegan dan melambangkan cinta sejati.</p>
+                    <button class="btn-detail" onclick="showDetail('Tulip', 'Tulip ramping dan elegan, simbol cinta yang sempurna dan momen spesial.')">Detail</button>
+                </div>
+<!-- ================= THANK YOU SECTION ================= -->
+<section class="thankyou-section">
+    <div class="sunflower"></div>
+
+    <h1 class="ty-title">THANK YOU</h1>
+
+    <div class="ty-contact">
+        <p>📞 0858-1951-9705</p>
+        <p>📷 @localflower.id</p>
+        <p>🏪 Local Flower Studio</p>
+        <p>📍 Jl. Kelo, No. 29</p>
+    <h2 class="ty-buy">BUY IT NOW !!</h2>
+
+    <div class="ty-exclamation">
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================= MODAL ================= -->
+    <div id="modal">
+        <div id="modal-content">
+            <img id="modal-img" src="" alt="Foto">
+            <h2 id="modal-title"></h2>
+            <p id="modal-text"></p>
+            <button id="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        function enterShop() {
+            document.getElementById("landing-page").style.display = "none";
+            document.getElementById("shop-page").style.display = "block";
+        }
+
+        function showDetail(flowerName, description) {
+            document.getElementById('modal-img').style.display = 'none'; // sembunyikan foto untuk bunga
+            document.getElementById('modal-title').innerText = flowerName;
+            document.getElementById('modal-text').innerText = description;
+            document.getElementById('modal').style.display = "flex";
+        }
+
+        function showBio(name, bio, photo) {
+            document.getElementById('modal-img').src = photo;
+            document.getElementById('modal-img').style.display = 'block';
+            document.getElementById('modal-title').innerText = name;
+            document.getElementById('modal-text').innerText = bio;
+            document.getElementById('modal').style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
